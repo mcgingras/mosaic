@@ -1,29 +1,39 @@
 import React, {Component} from 'react';
-import { View, StyleSheet, Button, TouchableWithoutFeedback } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
-import { toggleItem } from '../actions'
+import { toggleItem, checkIfSolved } from '../actions'
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#fff',
+        backgroundColor: '#000',
         flexDirection: 'row',
-        flexWrap: 'wrap'
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        flexWrap: 'wrap',
+        marginTop: 50
+    },
+
+    gameItem: {
+        width: 100,
+        height: 100,
+        margin: 10,
+        borderRadius: 10
     },
 
     gameItemOn: {
-        width: 100,
-        height: 100,
-        margin: 10,
-        backgroundColor: '#000',
+        backgroundColor: '#F14729',
+    },
+
+    gameItemPressed: {
+        backgroundColor: "#000",
+        borderColor: '#F14729',
+        borderWidth: 2
     },
 
     gameItemOff: {
-        width: 100,
-        height: 100,
-        margin: 10,
-        backgroundColor: '#FFF',
-        borderColor: '#000',
-        borderWidth: 1
+        backgroundColor: '#E6E6E2',
+        borderColor: '#F1F5F5',
+        borderWidth: .5
     }
   });
 
@@ -32,8 +42,9 @@ class GameContainer extends Component {
         super(props);
     }
 
-    press(){
-        console.log('is this pressing');
+    press(key){
+        this.props.toggleItem(key);
+        this.props.checkIfSolved();
     }
 
     render(){
@@ -44,10 +55,10 @@ class GameContainer extends Component {
                     <TouchableWithoutFeedback
                     key={key}
                     onPress={() => {
-                        this.props.toggleItem(key);
+                        this.press(key);
                     }}>
                         <View
-                        style={item == 0 ? styles.gameItemOn: styles.gameItemOff}>
+                        style={[styles.gameItem, item == 0 ? styles.gameItemOff: styles.gameItemOn]}>
                         </View>
                     </TouchableWithoutFeedback>
                 )
@@ -63,6 +74,6 @@ const mapStateToProps = (state) => {
     }
   }
 
-const mapDispatchToProps = { toggleItem }
+const mapDispatchToProps = { toggleItem, checkIfSolved }
 
 export default connect(mapStateToProps,mapDispatchToProps)(GameContainer);

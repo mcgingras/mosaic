@@ -12,7 +12,7 @@ export default class App extends Component {
     render() {
       return (
         <Provider store={store}>
-          <View>
+          <View style={{ backgroundColor: '#000', flex: 1}}>
             <Home />
           </View>
         </Provider>

@@ -1,5 +1,14 @@
+// puzzles will never change state .... just levels.
+// can find a way to pull this data in somewhere else.
+// does not need to be in global flux state.
+const puzzles = {
+    0: [1,1,1,0,0,0,0,1,0]
+}
+
 const initialState = {
-    board: [0,0,0,0,0,0,0,0,0]
+    board: [0,0,0,0,0,0,0,0,0],
+    puzzles: puzzles,
+    solved: false
 };
 
 const patterns = {
@@ -31,7 +40,19 @@ export function gameState(state = initialState, action) {
             return {
                 ...state, 
                 board
-            }        
+            }  
+        
+        case 'CHECK_PUZZLE':
+            var solved = false;
+            if (JSON.stringify(state.puzzles[0]) == JSON.stringify(state.board)){
+                solved = true
+            }
+
+            return {
+                ...state,
+                solved
+            }
+
         
         default:
             return state;
