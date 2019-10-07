@@ -1,5 +1,4 @@
-const TOGGLE_ITEM = 'TOGGLE_ITEM';
-const CHECK_PUZZLE = 'CHECK_PUZZLE';
+import { TOGGLE_ITEM, CHECK_PUZZLE } from '../constants/actions';
 
 export function toggleItem(itemId){
     return {
