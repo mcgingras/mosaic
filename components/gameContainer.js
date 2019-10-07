@@ -70,10 +70,9 @@ class GameContainer extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        board: state.gameState.board
+        board: state.gameState.board,
     }
   }
 
 const mapDispatchToProps = { toggleItem, checkIfSolved }
-
 export default connect(mapStateToProps,mapDispatchToProps)(GameContainer);
