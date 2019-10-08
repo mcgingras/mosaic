@@ -4,7 +4,6 @@ lil puzzler game to learn react-native a bit better.
 hope it is fun!
 
 things we could add
-- level screen (listview)
 - timer for levels
 - better colors
 - highlight (double tap to confirm move)
@@ -15,6 +14,6 @@ things we could add
 - less repeatable combos
 - loading / welcome screen
 - tutorial
-- remove puzzles from state
-- make constants into their own thing (puzzles into constants?)
+- load font to async redux pattern
 - progress (what levels have been completed already)
+- Do a interactive jupiter notebook (Streamlit?) so people can play with solutions

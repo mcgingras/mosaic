@@ -1,6 +1,40 @@
 import React, {Component} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
+import { levels } from '../constants/levels';
+
+
+class ViewContainer extends Component {
+    constructor(props){
+        super(props); 
+    }
+
+    render(){
+        return (
+            <View style={styles.container}>
+                {levels[this.props.currentLevel].map((item, key) => {
+                    return (
+                        <View
+                        key={key}
+                        style={[styles.viewItem, item == 0 ? styles.viewItemOff: styles.viewItemOn]}>
+                        </View>
+                    )
+                })}
+            </View>
+        )
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        puzzles: state.gameState.puzzles,
+        solved: state.gameState.solved,
+        currentLevel: state.levelState.currentLevel
+    }
+  }
+
+export default connect(mapStateToProps,null)(ViewContainer);
+
 
 const styles = StyleSheet.create({
     container: {
@@ -42,38 +76,3 @@ const styles = StyleSheet.create({
         color: 'white'
     }
   });
-
-
-class ViewContainer extends Component {
-    constructor(props){
-        super(props);
-
-        console.log(this.props.solved);
-        
-    }
-
-    render(){
-        return (
-            <View style={styles.container}>
-                {this.props.puzzles[0].map((item, key) => {
-                    return (
-                        <View
-                        key={key}
-                        style={[styles.viewItem, item == 0 ? styles.viewItemOff: styles.viewItemOn]}>
-                        </View>
-                    )
-                })}
-            </View>
-        )
-    }
-}
-
-const mapStateToProps = (state) => {
-    return {
-        puzzles: state.gameState.puzzles,
-        solved: state.gameState.solved
-    }
-  }
-
-export default connect(mapStateToProps,null)(ViewContainer);
-

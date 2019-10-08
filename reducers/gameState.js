@@ -5,7 +5,6 @@ const initialState = {
     board: [0,0,0,0,0,0,0,0,0],
     puzzles: levels,
     solved: false,
-    level: 1 // eventually can get this from preserved state
 };
 
 const patterns = {

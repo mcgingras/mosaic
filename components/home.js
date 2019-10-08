@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import GameContainer from './gameContainer';
 import ViewContainer from './viewContainer';
-import * as Font from 'expo-font';
-import { fontLoaded } from '../actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,14 +26,6 @@ const styles = StyleSheet.create({
 class Home extends Component {
   constructor(props){
       super(props);
-  }
-
-  async componentDidMount() {
-    await Font.loadAsync({
-      'StyreneA': require('../assets/fonts/StyreneA.ttf'),
-    });
-
-    this.props.fontLoaded();
   }
 
   render(){
@@ -63,11 +53,9 @@ class Home extends Component {
 
 const mapStateToProps = (state) => {
   return {
-      solved: state.gameState.solved,
-      loaded: state.fontState.loaded
+      solved: state.gameState.solved
   }
 }
 
-const mapDispatchToProps = { fontLoaded }
-export default connect(mapStateToProps,mapDispatchToProps)(Home);
+export default connect(mapStateToProps,null)(Home);
 

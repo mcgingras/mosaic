@@ -7,3 +7,4 @@
 export const TOGGLE_ITEM = 'TOGGLE_ITEM';
 export const CHECK_PUZZLE = 'CHECK_PUZZLE';
 export const FONT_LOADED = 'FONT_LOADED';
+export const SET_LEVEL = 'SET_LEVEL';

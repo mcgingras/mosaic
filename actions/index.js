@@ -1,4 +1,4 @@
-import { TOGGLE_ITEM, CHECK_PUZZLE, FONT_LOADED } from '../constants/actions';
+import { TOGGLE_ITEM, CHECK_PUZZLE, FONT_LOADED, SET_LEVEL } from '../constants/actions';
 
 export function toggleItem(itemId){
     return {
@@ -16,5 +16,12 @@ export function checkIfSolved(){
 export function fontLoaded(){
     return {
         type: FONT_LOADED
+    }
+}
+
+export function setLevel(levelId){
+    return {
+        type: SET_LEVEL,
+        levelId
     }
 }

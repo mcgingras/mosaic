@@ -8,5 +8,6 @@
  * 4x4 or 5x5 boards to increase difficulty.
  */
 export const levels = {
-    0: [1,1,1,0,0,0,0,1,0]
+    0: [1,1,1,0,0,0,0,1,0],
+    1: [1,0,1,0,0,1,0,1,0]
 }
