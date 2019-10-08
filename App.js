@@ -9,7 +9,6 @@ import rootReducer from './reducers/index.js';
 import LevelList from './components/levelList';
 const store = createStore(rootReducer);
 import * as Font from 'expo-font';
-import gameContainer from './components/gameContainer';
 
 
 // navigation
@@ -39,8 +38,6 @@ export default class App extends Component {
       return (
         <Provider store={store}>
           <View style={{ backgroundColor: '#000', flex: 1}}>
-              {/* <Home /> */}
-            {/* <LevelList/> */}
             <Navigation />
           </View>
         </Provider>

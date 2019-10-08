@@ -7,7 +7,13 @@ import { setLevel } from '../actions'
 class LevelList extends Component {
 
     static navigationOptions = {
-        title: 'Levels',
+        title: 'Mosaic',
+        headerStyle: {
+            backgroundColor: 'black',
+        },
+        headerTitleStyle: {
+            color: 'white',
+        }
     };
 
     constructor(props){
@@ -80,16 +86,22 @@ export default connect(mapStateToProps,mapDispatchToProps)(LevelList);
 const styles = StyleSheet.create({
     container: {
      flex: 1,
-     paddingTop: 22
+     backgroundColor: 'black'
     },
+
     itemBody: {
       padding: 10,
       fontSize: 18,
       height: 64,
       justifyContent: 'center',
       borderBottomWidth: 1,
+      borderBottomWidth: .5,
+      backgroundColor: 'black',
+      borderBottomColor: "rgba(241, 245, 245, .5)"
     },
+
     itemFont: {
-        fontFamily: 'StyreneA'
+        fontFamily: 'StyreneA',
+        color: '#F1F5F5'
     }
   })
