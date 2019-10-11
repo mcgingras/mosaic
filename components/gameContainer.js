@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
-import { toggleItem, checkIfSolved } from '../actions'
+import { toggleItem, checkIfSolved, incrementMoves } from '../actions'
 
 class GameContainer extends Component {
     constructor(props){
@@ -11,6 +11,7 @@ class GameContainer extends Component {
     press(key){
         this.props.toggleItem(key);
         this.props.checkIfSolved();
+        this.props.incrementMoves(this.props.levelId);
     }
 
     render(){
@@ -37,10 +38,11 @@ class GameContainer extends Component {
 const mapStateToProps = (state) => {
     return {
         board: state.gameState.board,
+        levelId: state.levelState.currentLevel
     }
   }
 
-const mapDispatchToProps = { toggleItem, checkIfSolved }
+const mapDispatchToProps = { toggleItem, checkIfSolved, incrementMoves }
 export default connect(mapStateToProps,mapDispatchToProps)(GameContainer);
 
 

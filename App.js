@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import { View } from 'react-native';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import Home from './components/home';
-import rootReducer from './reducers/index.js';
 import LevelList from './components/levelList';
-const store = createStore(rootReducer);
+import { store, persistor } from './store/store';
 import * as Font from 'expo-font';
 
 
@@ -27,8 +26,15 @@ let Navigation = createAppContainer(MainNavigator);
 export default class App extends Component {
 
     async componentDidMount(){
+        // purge persistance -- useful when modifying state in dev env
+        // const { dispatch } = this.props;
+        // dispatch({ 
+        //     type: RESET_STATE            
+        // })
+        
         await Font.loadAsync({
             'StyreneA': require('./assets/fonts/StyreneA.ttf'),
+            'Mono': require('./assets/fonts/AlmaMono-Regular.ttf')
           });
 
         store.dispatch({type:"FONT_LOADED"})
@@ -37,9 +43,11 @@ export default class App extends Component {
     render() {
       return (
         <Provider store={store}>
-          <View style={{ backgroundColor: '#000', flex: 1}}>
-            <Navigation />
-          </View>
+            <PersistGate loading={null} persistor={persistor}>
+                <View style={{ backgroundColor: '#000', flex: 1}}>
+                    <Navigation />
+                </View>
+            </PersistGate>
         </Provider>
       );
     }

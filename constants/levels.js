@@ -8,21 +8,24 @@
  * 4x4 or 5x5 boards to increase difficulty.
  */
 
-// export const levels = {
-//     1: [1,1,1,0,0,0,0,1,0],
-//     2: [1,0,1,0,0,1,0,1,0]
-// }
-
-const createLevels = (n) => {
-    let levels = {};
-    for (let i = 0; i < n; i++) {
-        let level = [];
-        for (let j = 0; j < 9; j++) {
-            level.push(Math.round(Math.random()))
-        }
-        levels[i] = level; 
-    }
-    return levels;
+export const levels = {
+    0: [0,1,0,1,1,1,0,1,0],
+    1: [1,1,0,1,0,0,0,0,0],
 }
 
-export const levels = createLevels(15);
+
+// randomly create levels
+
+// const createLevels = (n) => {
+//     let levels = {};
+//     for (let i = 0; i < n; i++) {
+//         let level = [];
+//         for (let j = 0; j < 9; j++) {
+//             level.push(Math.round(Math.random()))
+//         }
+//         levels[i] = level; 
+//     }
+//     return levels;
+// }
+
+// export const levels = createLevels(15);

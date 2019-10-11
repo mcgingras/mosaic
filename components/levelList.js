@@ -1,15 +1,19 @@
 import React, {Component} from 'react'; 
-import { View, FlatList, Text, StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import { View, FlatList, Text, StyleSheet, TouchableWithoutFeedback, Image} from 'react-native';
 import { connect } from 'react-redux';
 import { levels } from '../constants/levels';
-import { setLevel } from '../actions'
+import { setCurrentLevel, setBoardToLevel } from '../actions'
+import LogoTitle from './logoTitle';
+
 
 class LevelList extends Component {
 
     static navigationOptions = {
-        title: 'Mosaic',
+        title: 'Levels',
+        headerTitle: <LogoTitle />,
         headerStyle: {
             backgroundColor: 'black',
+            paddingBottom: 20
         },
         headerTitleStyle: {
             color: 'white',
@@ -17,12 +21,15 @@ class LevelList extends Component {
     };
 
     constructor(props){
-        super(props); 
+        super(props);
+        console.log(this.props.levelInfo);
+          
     }
 
     goToLevel(levelId){
         const {navigate} = this.props.navigation;
-        this.props.setLevel(levelId);
+        this.props.setCurrentLevel(levelId);
+        this.props.setBoardToLevel(levelId);
         // TODO: 'home' is a pretty shit name
         navigate('Home')
     }
@@ -38,7 +45,7 @@ class LevelList extends Component {
                 data={Object.keys(levels).map((level) => {
                     return (
                         {
-                            title: `level ${level}`,
+                            title: `LEVEL ${level}`,
                             levelId: level
                         }
                     )
@@ -46,10 +53,16 @@ class LevelList extends Component {
                 renderItem={({item}) => {
                     return (
                         <TouchableWithoutFeedback
+                        key={item.title}
                         onPress={() => {this.goToLevel(item.levelId)}}
                         >
                             <View style={styles.itemBody}>
-                                <Text style={styles.itemFont}>{item.title}</Text>
+                                <Text style={[styles.itemFont, item.levelId > this.props.maxLevel && styles.itemFontInactive]}>
+                                    {item.title}
+                                </Text>
+                                <Text style={[styles.itemFont, item.levelId > this.props.maxLevel && styles.itemFontInactive]}>
+                                    8 moves
+                                </Text>
                             </View>
                         </TouchableWithoutFeedback>
                     )
@@ -57,7 +70,8 @@ class LevelList extends Component {
                 />
                 :
                 // rendering empty when style isnt there yet
-                // very temporary though. might be way to change this
+                // hopefully temporary though. might be way to change this.
+                // like this is incredibly annoying and dumb
                 <View></View>
                 }
             </View>
@@ -67,11 +81,13 @@ class LevelList extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        loaded: state.fontState.loaded
+        loaded: state.fontState.loaded,
+        maxLevel: state.levelState.maxLevel,
+        levelInfo: state.levelState.levelInfo
     }
 }
 
-const mapDispatchToProps =  { setLevel }
+const mapDispatchToProps =  { setCurrentLevel, setBoardToLevel }
 
 export default connect(mapStateToProps,mapDispatchToProps)(LevelList);
 
@@ -101,7 +117,11 @@ const styles = StyleSheet.create({
     },
 
     itemFont: {
-        fontFamily: 'StyreneA',
+        fontFamily: 'Mono',
         color: '#F1F5F5'
+    },
+
+    itemFontInactive: {
+        color: "rgba(241, 245, 245, .5)"
     }
   })

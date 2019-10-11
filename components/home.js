@@ -3,17 +3,24 @@ import { connect } from 'react-redux';
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import GameContainer from './gameContainer';
 import ViewContainer from './viewContainer';
+import LogoTitle from './logoTitle';
 
 
 class Home extends Component {
 
   static navigationOptions = {
-    title: 'Level',
+    title: 'level',
+    headerTitle: <LogoTitle />,
     headerStyle: {
         backgroundColor: 'black',
+        paddingBottom: 20
+        // borderBottomWidth: 0
     },
+    headerTintColor: 'rgb(241, 245, 245)',
     headerTitleStyle: {
         color: 'white',
+        fontFamily: 'Helvetica',
+        fontWeight: 'light',
     }
 };
 
@@ -24,7 +31,7 @@ class Home extends Component {
   render(){
     return (
       <View style={styles.container}>
-        <ViewContainer/>
+        {/* <ViewContainer/> */}
         <GameContainer/>
         <TouchableWithoutFeedback
           onPress={() => {
@@ -71,7 +78,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    fontFamily: 'StyreneA',
+    fontFamily: 'Mono',
     color: 'white'
   }
 })

@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         alignItems: 'center', 
         justifyContent: 'center', 
         flexWrap: 'wrap',
-        marginTop: 100,
+        marginTop: 50,
         width: 150,
         marginHorizontal: 'auto'
     },
