@@ -1,4 +1,4 @@
-import { SET_CURRENT_LEVEL, SET_MAX_LEVEL, INCREMENT_MOVES } from '../constants/actions';
+import { SET_CURRENT_LEVEL, SET_MAX_LEVEL, UPDATE_LEVEL_METADATA } from '../constants/actions';
 
 
 /**
@@ -10,7 +10,8 @@ import { SET_CURRENT_LEVEL, SET_MAX_LEVEL, INCREMENT_MOVES } from '../constants/
 const initialState = {
     levelInfo: {},
     currentLevel: 0,
-    maxLevel: 0
+    maxLevel: 0,
+    currentMoves: 0
 };
 
 export function levelState (state = initialState, action) {
@@ -27,17 +28,34 @@ export function levelState (state = initialState, action) {
                 maxLevel: action.levelId
             }
         
-        case INCREMENT_MOVES:
+        case UPDATE_LEVEL_METADATA:
             const id = action.levelId;
-            return {
-                ...state,
-                levelInfo: {
-                    ...state.levelInfo,
-                    [id]: {
-                        moves: action.levelId.moves++
+            const moves = action.moves;
+
+            // level has been completed before
+            if (id in state.levelInfo){
+                return {
+                    ...state,
+                    levelInfo: {
+                        ...state.levelInfo,
+                        [id]: moves < state.levelInfo[id].moves ? {moves} : {moves: state.levelInfo[id].moves}
                     }
                 }
             }
+            else {
+                return {
+                    ...state,
+                    levelInfo: {
+                        ...state.levelInfo,
+                        [id]: {
+                            moves
+                        }
+                    }
+                }
+            }
+
+        case 'RESET_STATE':
+            return initialState;
 
         default:
             return state;

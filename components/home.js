@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import GameContainer from './gameContainer';
-import ViewContainer from './viewContainer';
 import LogoTitle from './logoTitle';
 
 
@@ -28,10 +27,17 @@ class Home extends Component {
       super(props);  
   }
 
+  // navigate to success screen if you solve the puzzle
+  goToSuccess(){
+    const {navigate} = this.props.navigation;
+    navigate('SuccessScreen');
+  }
+
   render(){
+    this.props.solved && this.goToSuccess();
+
     return (
       <View style={styles.container}>
-        {/* <ViewContainer/> */}
         <GameContainer/>
         <TouchableWithoutFeedback
           onPress={() => {
@@ -39,7 +45,7 @@ class Home extends Component {
           }}>
           {this.props.loaded ?
             <View style={styles.button}>
-              <Text style={styles.text}>{this.props.solved ? 'solved!' : 'not solved'}</Text>
+              <Text style={styles.text}>{this.props.moves}</Text>
             </View> :
             <View style={styles.button}>
               <Text>why is nothing here</Text>
@@ -55,7 +61,8 @@ class Home extends Component {
 const mapStateToProps = (state) => {
   return {
       solved: state.gameState.solved,
-      loaded: state.fontState.loaded
+      loaded: state.fontState.loaded,
+      moves: state.gameState.currentMoves
   }
 }
 

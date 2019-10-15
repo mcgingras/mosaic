@@ -6,6 +6,7 @@ import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import Home from './components/home';
 import LevelList from './components/levelList';
+import SuccessScreen from './components/successScreen';
 import { store, persistor } from './store/store';
 import * as Font from 'expo-font';
 
@@ -14,6 +15,7 @@ import * as Font from 'expo-font';
 const MainNavigator = createStackNavigator({
     Levels: {screen: LevelList},
     Home: {screen: Home},
+    SuccessScreen: {screen: SuccessScreen},
   },
   {
     initialRouteName: 'Levels',
@@ -25,11 +27,14 @@ let Navigation = createAppContainer(MainNavigator);
 // main app with redux store
 export default class App extends Component {
 
+    constructor(props){
+      super(props);
+
+    }
     async componentDidMount(){
         // purge persistance -- useful when modifying state in dev env
-        // const { dispatch } = this.props;
-        // dispatch({ 
-        //     type: RESET_STATE            
+        // store.dispatch({ 
+        //     type: 'RESET_STATE'           
         // })
         
         await Font.loadAsync({

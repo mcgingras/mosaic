@@ -1,11 +1,12 @@
-import { TOGGLE_ITEM, CHECK_PUZZLE, SET_BOARD } from '../constants/actions';
+import { TOGGLE_ITEM, CHECK_PUZZLE, SET_BOARD, INCREMENT_MOVES } from '../constants/actions';
 import { levels } from '../constants/levels';
 
 const initialState = {
     board: [0,0,0,0,0,0,0,0,0],
     puzzles: levels,
     solved: false,
-    currentLevel: 0
+    currentLevel: 0,
+    currentMoves: 0
 };
 
 const patterns = {
@@ -40,11 +41,15 @@ export function gameState(state = initialState, action) {
             }  
         
         // when level is changed we need to set the initial starting config to the correct level.
+        // current moves should also reset
         // from there, regular editing can be done.
         case SET_BOARD:
             const levelId = action.levelId;
             return {
                 ...state, 
+                solved: false,
+                currentMoves: 0,
+                currentLevel: levelId,
                 board: levels[levelId]
             }
 
@@ -59,6 +64,13 @@ export function gameState(state = initialState, action) {
                 solved
             }
         
+        
+        case INCREMENT_MOVES:
+            return { 
+                ...state,
+                currentMoves: state.currentMoves+=1
+            }
+
         /**
          * redux persist can be a pain to use in development because any changes to initalState
          * get overwritten when it rehydrates. So, this just clears that out easily.

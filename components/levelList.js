@@ -1,5 +1,5 @@
 import React, {Component} from 'react'; 
-import { View, FlatList, Text, StyleSheet, TouchableWithoutFeedback, Image} from 'react-native';
+import { View, FlatList, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 import { levels } from '../constants/levels';
 import { setCurrentLevel, setBoardToLevel } from '../actions'
@@ -21,9 +21,10 @@ class LevelList extends Component {
     };
 
     constructor(props){
-        super(props);
-        console.log(this.props.levelInfo);
-          
+        super(props); 
+        
+        console.log(this.props);
+        
     }
 
     goToLevel(levelId){
@@ -61,7 +62,10 @@ class LevelList extends Component {
                                     {item.title}
                                 </Text>
                                 <Text style={[styles.itemFont, item.levelId > this.props.maxLevel && styles.itemFontInactive]}>
-                                    8 moves
+                                    {!(item.levelId in this.props.levelInfo) ? 
+                                        'level locked' :
+                                        `Record: ${this.props.levelInfo[item.levelId].moves} moves`
+                                    }
                                 </Text>
                             </View>
                         </TouchableWithoutFeedback>
@@ -82,6 +86,7 @@ class LevelList extends Component {
 const mapStateToProps = (state) => {
     return {
         loaded: state.fontState.loaded,
+        levelId: state.levelState.currentLevel,
         maxLevel: state.levelState.maxLevel,
         levelInfo: state.levelState.levelInfo
     }

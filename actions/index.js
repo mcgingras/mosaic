@@ -1,6 +1,6 @@
 import { TOGGLE_ITEM, CHECK_PUZZLE, FONT_LOADED,
          SET_CURRENT_LEVEL, SET_MAX_LEVEL, SET_BOARD,
-         INCREMENT_MOVES } from '../constants/actions';
+         INCREMENT_MOVES, UPDATE_LEVEL_METADATA } from '../constants/actions';
 
 
 /**
@@ -64,5 +64,13 @@ export function setBoardToLevel(levelId){
     return {
         type: SET_BOARD,
         levelId
+    }
+}
+
+export function updateLevelMetadata(levelId, moves){
+    return {
+        type: UPDATE_LEVEL_METADATA,
+        levelId,
+        moves
     }
 }
