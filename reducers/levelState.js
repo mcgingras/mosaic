@@ -23,9 +23,17 @@ export function levelState (state = initialState, action) {
             }
         
         case SET_MAX_LEVEL:
+            const currentLevel = action.levelId;
+            let maxLevel = state.maxLevel;
+
+
+            if (parseInt(currentLevel) + 1 > maxLevel){
+                maxLevel = parseInt(currentLevel) + 1;
+            }
+
             return {
                 ...state,
-                maxLevel: action.levelId
+                maxLevel
             }
         
         case UPDATE_LEVEL_METADATA:

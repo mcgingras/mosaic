@@ -22,9 +22,6 @@ class LevelList extends Component {
 
     constructor(props){
         super(props); 
-        
-        console.log(this.props);
-        
     }
 
     goToLevel(levelId){
@@ -62,8 +59,10 @@ class LevelList extends Component {
                                     {item.title}
                                 </Text>
                                 <Text style={[styles.itemFont, item.levelId > this.props.maxLevel && styles.itemFontInactive]}>
-                                    {!(item.levelId in this.props.levelInfo) ? 
+                                    {item.levelId > this.props.maxLevel ? 
                                         'level locked' :
+                                        !(item.levelId in this.props.levelInfo) ?
+                                        `No record set` :
                                         `Record: ${this.props.levelInfo[item.levelId].moves} moves`
                                     }
                                 </Text>

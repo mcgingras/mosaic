@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import LogoTitle from './logoTitle';
-import { updateLevelMetadata } from '../actions';
+import { updateLevelMetadata, setMaxLevel } from '../actions';
 
 
 class SuccessScreen extends Component {
@@ -26,6 +26,7 @@ class SuccessScreen extends Component {
   componentDidMount(){
     const { navigate } = this.props.navigation;
     this.props.updateLevelMetadata(this.props.currentLevel, this.props.currentMoves);
+    this.props.setMaxLevel(this.props.currentLevel);
     setTimeout(() => { navigate('Levels')}, 3000);
   }
 
@@ -45,7 +46,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps =  { updateLevelMetadata }
+const mapDispatchToProps =  { updateLevelMetadata, setMaxLevel }
 
 export default connect(mapStateToProps,mapDispatchToProps)(SuccessScreen);
 

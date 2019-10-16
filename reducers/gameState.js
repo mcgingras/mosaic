@@ -24,7 +24,6 @@ const patterns = {
 export function gameState(state = initialState, action) {
     switch(action.type){
         case TOGGLE_ITEM:
-            console.log(state);
             const pressed = action.itemId;
             const board =  state.board.map((curValue,curIndex ) => {
                 if(!patterns[pressed].includes(curIndex)){
