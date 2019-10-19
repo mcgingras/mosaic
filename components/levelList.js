@@ -3,21 +3,15 @@ import { View, FlatList, Text, StyleSheet, TouchableWithoutFeedback } from 'reac
 import { connect } from 'react-redux';
 import { levels } from '../constants/levels';
 import { setCurrentLevel, setBoardToLevel } from '../actions'
-import LogoTitle from './logoTitle';
+import LevelItem from './levelItem';
 
 
 class LevelList extends Component {
 
+    // dont want header to show for this initial screen,
+    // but we want it here for the nav props
     static navigationOptions = {
-        title: 'Levels',
-        headerTitle: <LogoTitle />,
-        headerStyle: {
-            backgroundColor: 'black',
-            paddingBottom: 20
-        },
-        headerTitleStyle: {
-            color: 'white',
-        }
+        header: null
     };
 
     constructor(props){
@@ -25,6 +19,8 @@ class LevelList extends Component {
     }
 
     goToLevel(levelId){
+        console.log('arewegoing');
+        
         const {navigate} = this.props.navigation;
         this.props.setCurrentLevel(levelId);
         this.props.setBoardToLevel(levelId);
@@ -39,38 +35,56 @@ class LevelList extends Component {
                     font to load first before rendering with that style */}
                 {this.props.loaded
                 ?
-                <FlatList
-                data={Object.keys(levels).map((level) => {
-                    return (
-                        {
-                            title: `LEVEL ${level}`,
-                            levelId: level
-                        }
-                    )
-                })}
-                renderItem={({item}) => {
-                    return (
-                        <TouchableWithoutFeedback
-                        key={item.title}
-                        onPress={() => {this.goToLevel(item.levelId)}}
-                        >
-                            <View style={styles.itemBody}>
-                                <Text style={[styles.itemFont, item.levelId > this.props.maxLevel && styles.itemFontInactive]}>
-                                    {item.title}
-                                </Text>
-                                <Text style={[styles.itemFont, item.levelId > this.props.maxLevel && styles.itemFontInactive]}>
-                                    {item.levelId > this.props.maxLevel ? 
-                                        'level locked' :
-                                        !(item.levelId in this.props.levelInfo) ?
-                                        `No record set` :
-                                        `Record: ${this.props.levelInfo[item.levelId].moves} moves`
-                                    }
-                                </Text>
-                            </View>
-                        </TouchableWithoutFeedback>
-                    )
-                }}
-                />
+                <View style={styles.container}>
+                    <View style={styles.containerTitle}>
+                        <Text style={styles.titleText}>Lights{"\n"} Out!</Text>
+                    </View>
+
+                    {/* stack of colors -- just for decoration :-0 */}
+                    <View style={[styles.colorStack, styles.colorStack4]}></View>
+                    <View style={[styles.colorStack, styles.colorStack3]}></View>
+                    <View style={[styles.colorStack, styles.colorStack2]}></View>
+                    <View style={[styles.colorStack, styles.colorStack1]}></View>
+
+                    <Text style={styles.h2}>SET I</Text>
+
+                    <FlatList
+                    horizontal={true}
+                    data={Object.keys(levels).map((level) => {
+                        return (
+                            {
+                                title: `LEVEL ${level}`,
+                                levelId: level
+                            }
+                        )
+                    })}
+                    renderItem={({item}) => {
+                        return (
+                            <TouchableWithoutFeedback
+                            key={item.title}
+                            onPress={() => {this.goToLevel(item.levelId)}}
+                            >
+                                {/* <View style={styles.itemBody}>
+                                    <Text style={[styles.itemFont, item.levelId > this.props.maxLevel && styles.itemFontInactive]}>
+                                        {item.title}
+                                    </Text>
+                                    <Text style={[styles.itemFont, item.levelId > this.props.maxLevel && styles.itemFontInactive]}>
+                                        {item.levelId > this.props.maxLevel ? 
+                                            'level locked' :
+                                            !(item.levelId in this.props.levelInfo) ?
+                                            `No record set` :
+                                            `Record: ${this.props.levelInfo[item.levelId].moves} moves`
+                                        }
+                                    </Text>
+                                </View> */}
+                                <View>
+                                    <LevelItem levelId={item.levelId} />
+                                </View>
+                            </TouchableWithoutFeedback>
+                        )
+                    }}
+                    />
+                </View>
                 :
                 // rendering empty when style isnt there yet
                 // hopefully temporary though. might be way to change this.
@@ -102,11 +116,18 @@ export default connect(mapStateToProps,mapDispatchToProps)(LevelList);
  * container: rectangle that holds entire list
  * itemBody:  rectangle that holds individual level item
  * itemFont:  font displayed in itemBody
+ * colorStack[n]: colored rectangle just for decoration.
  */
 const styles = StyleSheet.create({
     container: {
      flex: 1,
      backgroundColor: 'black'
+    },
+
+    containerTitle: {
+        backgroundColor: 'white',
+        padding: 8,
+        paddingTop: 50
     },
 
     itemBody: {
@@ -120,12 +141,36 @@ const styles = StyleSheet.create({
       borderBottomColor: "rgba(241, 245, 245, .5)"
     },
 
+    titleText: {
+        fontFamily: 'GT-Cinetype',
+        color: '#000',
+        fontSize: 64
+    },
+
     itemFont: {
-        fontFamily: 'Mono',
+        fontFamily: 'GT-Cinetype',
         color: '#F1F5F5'
+    },
+
+    h2: {
+        fontFamily: 'GT-Cinetype',
+        color: "#F1F5F5",
+        fontSize: 24,
+        margin: 20
     },
 
     itemFontInactive: {
         color: "rgba(241, 245, 245, .5)"
-    }
+    },
+
+    colorStack: {
+        height: 10,
+        width: "100%"
+    },
+
+    colorStack1: { backgroundColor: "#434141" },
+    colorStack2: { backgroundColor: "#8B8989" },
+    colorStack3: { backgroundColor: "#B7B7B7" },
+    colorStack4: { backgroundColor: "#DFDFDF" },
+
   })

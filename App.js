@@ -39,7 +39,8 @@ export default class App extends Component {
         
         await Font.loadAsync({
             'StyreneA': require('./assets/fonts/StyreneA.ttf'),
-            'Mono': require('./assets/fonts/AlmaMono-Regular.ttf')
+            'Mono': require('./assets/fonts/AlmaMono-Regular.ttf'),
+            'GT-Cinetype': require('./assets/fonts/GT-Cinetype-Regular.ttf'),
           });
 
         store.dispatch({type:"FONT_LOADED"})

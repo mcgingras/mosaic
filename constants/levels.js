@@ -15,20 +15,3 @@ export const levels = {
     3: [1,1,1,1,0,1,1,1,1],
     4: [1,1,1,1,0,1,1,1,1]
 }
-
-
-// randomly create levels
-
-// const createLevels = (n) => {
-//     let levels = {};
-//     for (let i = 0; i < n; i++) {
-//         let level = [];
-//         for (let j = 0; j < 9; j++) {
-//             level.push(Math.round(Math.random()))
-//         }
-//         levels[i] = level; 
-//     }
-//     return levels;
-// }
-
-// export const levels = createLevels(15);
