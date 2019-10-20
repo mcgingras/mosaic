@@ -3,7 +3,6 @@ import { levels } from '../constants/levels';
 
 const initialState = {
     board: [0,0,0,0,0,0,0,0,0],
-    puzzles: levels,
     solved: false,
     currentLevel: 0,
     currentMoves: 0

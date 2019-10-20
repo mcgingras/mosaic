@@ -171,8 +171,23 @@ n = 9
 puzzleList = [ [list(i[0:3]), list(i[3:6]), list(i[6:])] for i in product([0, 1], repeat=n)]
 first10 = puzzleList[:10]
 
+puzzles = {}
+solutions = {}
 lo = LightsOut(3)
-for puzzle in first10:
-    b = np.array(puzzle)
+# for puzzle in first10:
+#     b = np.array(puzzle)
+#     sol = lo.solve(b)
+#     print(b)
+#     # print("The solution of\n{}\nis\n{}".format(b, sol))
+
+
+for i in range(len(puzzleList)):
+    b = np.array(puzzleList[i])
+    puzzles[i] = b.flatten().tolist()
     sol = lo.solve(b)
-    print("The solution of\n{}\nis\n{}".format(b, sol))
+    solutions[i] = sol.flatten().tolist()
+
+
+import json
+with open('solutions.json', 'w') as fp:
+    json.dump(solutions, fp)

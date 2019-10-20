@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
-import { toggleItem, checkIfSolved, incrementMoves } from '../actions'
+import { toggleItem, checkIfSolved, incrementMoves } from '../actions';
 
 class GameContainer extends Component {
     constructor(props){

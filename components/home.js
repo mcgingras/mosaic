@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import GameContainer from './gameContainer';
 import LogoTitle from './logoTitle';
+import {solutions } from '../constants/levels';
 
 
 class Home extends Component {
@@ -39,20 +40,15 @@ class Home extends Component {
     return (
       <View style={styles.container}>
         <GameContainer/>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            this.props.toggleItem(key);
-          }}>
           {this.props.loaded ?
             <View style={styles.button}>
               <Text style={styles.text}>{this.props.moves}</Text>
+              <Text>{solutions[this.props.levelId]}</Text>
             </View> :
             <View style={styles.button}>
               <Text>why is nothing here</Text>
             </View>
           }
-
-        </TouchableWithoutFeedback>
       </View>
     )
   }
@@ -62,6 +58,7 @@ const mapStateToProps = (state) => {
   return {
       solved: state.gameState.solved,
       loaded: state.fontState.loaded,
+      levelId: state.levelState.currentLevel,
       moves: state.gameState.currentMoves
   }
 }
