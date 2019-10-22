@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
+// screens
 import Home from './components/home';
 import LevelList from './components/levelList';
 import SuccessScreen from './components/successScreen';

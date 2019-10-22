@@ -5,7 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import {TOGGLE_ITEM, CHECK_PUZZLE, INCREMENT_MOVES} from '../constants/actions';
 
 
+// required for animation
 const AnimatedView = animated(View);
+
 /**
  * game container
  * 
@@ -42,6 +44,8 @@ const GameContainer = (props) => {
         
     }
 
+    // tried doing this in set, but it was updating with board before the state change took effect
+    // now waiting for render change, and using new value of board
     useEffect(() => {
         set(index => ({scale: board[index]}))
     });

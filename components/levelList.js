@@ -46,10 +46,8 @@ class LevelList extends Component {
                     <View style={[styles.colorStack, styles.colorStack2]}></View>
                     <View style={[styles.colorStack, styles.colorStack1]}></View>
 
-                    <Text style={styles.h2}>SET I</Text>
-
                     <FlatList
-                    horizontal={true}
+                    // horizontal={true}
                     data={Object.keys(levels).map((level) => {
                         return (
                             {
@@ -64,21 +62,13 @@ class LevelList extends Component {
                             key={item.title}
                             onPress={() => {this.goToLevel(item.levelId)}}
                             >
-                                {/* <View style={styles.itemBody}>
-                                    <Text style={[styles.itemFont, item.levelId > this.props.maxLevel && styles.itemFontInactive]}>
-                                        {item.title}
-                                    </Text>
-                                    <Text style={[styles.itemFont, item.levelId > this.props.maxLevel && styles.itemFontInactive]}>
-                                        {item.levelId > this.props.maxLevel ? 
-                                            'level locked' :
-                                            !(item.levelId in this.props.levelInfo) ?
-                                            `No record set` :
-                                            `Record: ${this.props.levelInfo[item.levelId].moves} moves`
-                                        }
-                                    </Text>
-                                </View> */}
                                 <View>
-                                    <LevelItem levelId={item.levelId} />
+                                    <LevelItem 
+                                    levelId={item.levelId}
+                                    levelInfo={this.props.levelInfo}
+                                    maxLevel={this.props.maxLevel}
+                                    title={`level ${item.levelId}`}
+                                     />
                                 </View>
                             </TouchableWithoutFeedback>
                         )
@@ -130,26 +120,10 @@ const styles = StyleSheet.create({
         paddingTop: 50
     },
 
-    itemBody: {
-      padding: 10,
-      fontSize: 18,
-      height: 64,
-      justifyContent: 'center',
-      borderBottomWidth: 1,
-      borderBottomWidth: .5,
-      backgroundColor: 'black',
-      borderBottomColor: "rgba(241, 245, 245, .5)"
-    },
-
     titleText: {
         fontFamily: 'GT-Cinetype',
         color: '#000',
         fontSize: 64
-    },
-
-    itemFont: {
-        fontFamily: 'GT-Cinetype',
-        color: '#F1F5F5'
     },
 
     h2: {
@@ -157,10 +131,6 @@ const styles = StyleSheet.create({
         color: "#F1F5F5",
         fontSize: 24,
         margin: 20
-    },
-
-    itemFontInactive: {
-        color: "rgba(241, 245, 245, .5)"
     },
 
     colorStack: {
