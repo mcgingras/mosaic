@@ -10,6 +10,8 @@ export default class LevelItem extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.containerText}>{this.props.levelId}</Text>
+                {/* add min moves */}
+                {/* add preview */}
             </View>
         )
     }

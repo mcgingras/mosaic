@@ -11,7 +11,6 @@ things we could add
 - better layout (so changing view -> text doesnt wreck it)
 - better architecture (modularize board view from stateful to view)
 - more complex levels? (new game mechanics?)
-- analyze all possible levels somehow
 - loading / welcome screen
 - tutorial
 - make logo better

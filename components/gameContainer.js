@@ -1,51 +1,92 @@
-import React, {Component} from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import { connect } from 'react-redux';
-import { toggleItem, checkIfSolved, incrementMoves } from '../actions';
+import { useSprings, animated } from 'react-spring'
+import { useSelector, useDispatch } from 'react-redux';
+import {TOGGLE_ITEM, CHECK_PUZZLE, INCREMENT_MOVES} from '../constants/actions';
 
-class GameContainer extends Component {
-    constructor(props){
-        super(props);
+
+const AnimatedView = animated(View);
+/**
+ * game container
+ * 
+ * this component is the configuration of the board.
+ * it shows all of the tiles, and binds actions for when they are tapped
+ * name could use some work.
+ */
+const GameContainer = (props) => {
+
+    // redux 
+    const dispatch = useDispatch();
+    const board = useSelector(state => state.gameState.board);
+    const levelId = useSelector(state => state.levelState.currentLevel);
+    
+
+    // make **board length** springs
+    const [springs, set, stop] = useSprings(board.length, index => ({config: { mass: 1, tension: 150, friction: 40 }, scale: 1, from: {scale: 0}}))
+
+    
+
+    /**
+     * if you press a button, it toggles a few actions
+     * 
+     * toggle_item : changes board based on press
+     * check_if_solved: see if board state is solved
+     * increment_moves: increment moves counter to set record (lowest moves)
+     */
+    press = (key) => {
+        dispatch({ type: TOGGLE_ITEM, itemId: key })
+        dispatch({ type: CHECK_PUZZLE })
+        dispatch({ type: INCREMENT_MOVES, levelId })
+
+        // board is array with 0 for off, 1 for on
+        
     }
 
-    press(key){
-        this.props.toggleItem(key);
-        this.props.checkIfSolved();
-        this.props.incrementMoves(this.props.levelId);
-    }
+    useEffect(() => {
+        set(index => ({scale: board[index]}))
+    });
 
-    render(){
-        return (
-        <View style={styles.container}>
-            {this.props.board.map((item, key) => {
-                return (
-                    <TouchableWithoutFeedback
-                    key={key}
-                    onPress={() => {
-                        this.press(key);
-                    }}>
-                        <View
-                        style={[styles.gameItem, item == 0 ? styles.gameItemOff: styles.gameItemOn]}>
-                        </View>
-                    </TouchableWithoutFeedback>
-                )
-            })}
-        </View>
-        )
-    }
+
+    return (
+    <View style={styles.container}>
+        {springs.map((springProps, key) => {
+            const item = board[key];
+            return (
+                <TouchableWithoutFeedback
+                key={key}
+                onPress={() => {
+                    this.press(key);
+                }}>
+                    <View style={styles.itemContainer}>
+                        <AnimatedView style={
+                            [styles.gameItem,
+                            {
+                            height: springProps.scale
+                            .interpolate({
+                                range: [0, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 1],
+                                output: [10, 20, 30, 40, 50, 55, 52, 50]
+                              }),
+                            width: springProps.scale
+                            .interpolate({
+                                range: [0, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 1],
+                                output: [10, 20, 30, 40, 50, 55, 52, 50]
+                            })
+                            }
+                            ]}>
+                        </AnimatedView>
+                    </View>
+                </TouchableWithoutFeedback>
+            )
+        })}
+    </View>
+    )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        board: state.gameState.board,
-        levelId: state.levelState.currentLevel
-    }
-  }
 
-const mapDispatchToProps = { toggleItem, checkIfSolved, incrementMoves }
-export default connect(mapStateToProps,mapDispatchToProps)(GameContainer);
+export default GameContainer;
 
 
+// styles
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#000',
@@ -57,14 +98,17 @@ const styles = StyleSheet.create({
     },
 
     gameItem: {
+        borderRadius: 100,
+        backgroundColor: 'white'
+    },
+
+    itemContainer: {
         width: 100,
         height: 100,
         margin: 10,
-        borderRadius: 10
-    },
-
-    gameItemOn: {
-        backgroundColor: '#F14729',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
 
     gameItemPressed: {
@@ -73,9 +117,4 @@ const styles = StyleSheet.create({
         borderWidth: 2
     },
 
-    gameItemOff: {
-        backgroundColor: '#E6E6E2',
-        borderColor: '#F1F5F5',
-        borderWidth: .5
-    }
   });
