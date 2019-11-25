@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import { useSprings, animated } from 'react-spring'
+import { View, StyleSheet, TouchableWithoutFeedback, Text } from 'react-native';
+import { useSpring, useSprings, animated } from 'react-spring'
 import { useSelector, useDispatch } from 'react-redux';
 import {TOGGLE_ITEM, CHECK_PUZZLE, INCREMENT_MOVES} from '../constants/actions';
 
@@ -17,15 +17,17 @@ const AnimatedView = animated(View);
  */
 const GameContainer = (props) => {
 
-    // redux 
+    // redux hooks
     const dispatch = useDispatch();
     const board = useSelector(state => state.gameState.board);
     const levelId = useSelector(state => state.levelState.currentLevel);
     
+    
 
     // make **board length** springs
-    const [springs, set, stop] = useSprings(board.length, index => ({config: { mass: 1, tension: 150, friction: 40 }, scale: 1, from: {scale: 0}}))
-
+    // the springs are neccesary bc this is what
+    // is doing the animation
+    const [springs, set, stop] = useSprings(board.length, index => ({config: { mass: 1, tension: 150, friction: 40 }, scale: 1, from: {scale: 0}}))    
     
 
     /**
@@ -39,7 +41,6 @@ const GameContainer = (props) => {
         dispatch({ type: TOGGLE_ITEM, itemId: key })
         dispatch({ type: CHECK_PUZZLE })
         dispatch({ type: INCREMENT_MOVES, levelId })
-
         // board is array with 0 for off, 1 for on
         
     }
@@ -120,5 +121,9 @@ const styles = StyleSheet.create({
         borderColor: '#F14729',
         borderWidth: 2
     },
+
+    text: {
+        color: 'white'
+    }
 
   });

@@ -9,8 +9,8 @@ import { SET_CURRENT_LEVEL, SET_MAX_LEVEL, UPDATE_LEVEL_METADATA } from '../cons
 
 const initialState = {
     levelInfo: {},
-    currentLevel: 0,
-    maxLevel: 0,
+    currentLevel: 1,
+    maxLevel: 1,
     currentMoves: 0
 };
 

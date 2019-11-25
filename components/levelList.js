@@ -19,14 +19,15 @@ class LevelList extends Component {
     }
 
     goToLevel(levelId){
-        console.log('arewegoing');
-        
-        const {navigate} = this.props.navigation;
-        this.props.setCurrentLevel(levelId);
-        this.props.setBoardToLevel(levelId);
-        // TODO: 'home' is a pretty shit name
-        navigate('Home')
+        // if (levelId <= this.props.maxLevel){
+            const {navigate} = this.props.navigation;
+            this.props.setCurrentLevel(levelId);
+            this.props.setBoardToLevel(levelId);
+            navigate('Home')
+        // }
     }
+
+    levelsOrdered = [23, 173, 184, 120, 132, 265, 293, 322, 341];
 
     render(){
         return (
@@ -48,11 +49,20 @@ class LevelList extends Component {
 
                     <FlatList
                     // horizontal={true}
-                    data={Object.keys(levels).map((level) => {
+                    // data={Object.keys(levels).map((level) => {
+                    //     return (
+                    //         {
+                    //             title: `LEVEL ${level}`,
+                    //             levelId: level
+                    //         }
+                    //     )
+                    // })}
+                    data={this.levelsOrdered.map((level, i) => {
                         return (
                             {
-                                title: `LEVEL ${level}`,
-                                levelId: level
+                                title: `LEVEL ${i}`,
+                                levelId: level,
+                                index: i
                             }
                         )
                     })}
@@ -64,10 +74,10 @@ class LevelList extends Component {
                             >
                                 <View>
                                     <LevelItem 
-                                    levelId={item.levelId}
+                                    levelId={item.index + 1}
                                     levelInfo={this.props.levelInfo}
                                     maxLevel={this.props.maxLevel}
-                                    title={`level ${item.levelId}`}
+                                    title={`level ${item.index}`}
                                      />
                                 </View>
                             </TouchableWithoutFeedback>
@@ -115,15 +125,15 @@ const styles = StyleSheet.create({
     },
 
     containerTitle: {
-        backgroundColor: 'white',
+        backgroundColor: 'black',
         padding: 8,
         paddingTop: 50
     },
 
     titleText: {
         fontFamily: 'GT-Cinetype',
-        color: '#000',
-        fontSize: 64
+        color: '#FFF',
+        fontSize: 64,
     },
 
     h2: {

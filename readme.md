@@ -12,4 +12,6 @@ things we could add
 - make logo better
 - load font to async redux pattern
 - neon design
+- MAKE IT SO YOU CANT CLICK LEVEL IF NOT UNLOCKED
 - Do a interactive jupiter notebook (Streamlit?) so people can play with solutions
+- convert everything to functional components

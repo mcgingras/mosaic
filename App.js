@@ -34,9 +34,9 @@ export default class App extends Component {
     }
     async componentDidMount(){
         // purge persistance -- useful when modifying state in dev env
-        // store.dispatch({ 
-        //     type: 'RESET_STATE'           
-        // })
+        store.dispatch({ 
+            type: 'RESET_STATE'           
+        })
         
         await Font.loadAsync({
             'StyreneA': require('./assets/fonts/StyreneA.ttf'),
